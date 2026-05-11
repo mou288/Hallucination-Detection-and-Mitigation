@@ -79,8 +79,8 @@ Weighted Ensemble Classifier
 ├── vector_db.ipynb                          # Build the FAISS + BM25 hybrid vector database
 ├── Data_generation_for_classifier.ipynb     # Extract LLM internal signals and label training data
 ├── classifier_weighted_ensemble.py          # Train and evaluate the hallucination classifier
-├── RAG_pipeline_generation_and_evaluation.ipynb  # End-to-end inference pipeline with evaluation
-└── results_weighted_ensemble.txt            # Full training log and evaluation results
+└──RAG_pipeline_generation_and_evaluation.ipynb  # End-to-end inference pipeline with evaluation
+
 ```
 
 ---
@@ -89,7 +89,7 @@ Weighted Ensemble Classifier
 
 ### Vector Database (`vector_db.ipynb`)
 
-Builds a hybrid retrieval index over First Aid medical text.
+Builds a hybrid retrieval index over medical text (USMLE step 1, USMLE step 2, pathoma, pharmacology).
 
 - **Chunking**: CUI-aware chunking using scispaCy + UMLS entity linking. Chunks are split on semantic dissimilarity and medical concept boundaries rather than fixed token windows.
 - **Dense index**: FAISS with `all-mpnet-base-v2` embeddings (normalized, cosine similarity).
@@ -169,7 +169,7 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/e
 ```
 
 **Models required (via Hugging Face):**
-- `mistralai/Mistral-7B-Instruct-v0.3` (gated; requires HF token)
+- `mistralai/Mistral-7B-Instruct-v0.3` 
 - `sentence-transformers/all-mpnet-base-v2`
 - `cross-encoder/ms-marco-MiniLM-L-6-v2`
 - `roberta-large-mnli`
@@ -187,7 +187,7 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/e
 
 - The classifier was trained and evaluated on medical flashcard-style Q&A. Performance on other domains or longer-form answers is not characterized.
 - The abstention mechanism reduces hallucinations but also introduces coverage loss (6.6% abstention rate).
-- Retrieval is limited to the First Aid corpus. Questions outside this scope may not benefit from RAG.
+- Retrieval is limited to the medical First Aid styled corpus. Questions outside this scope may not benefit from RAG.
 - All inference uses 4-bit quantized Mistral-7B; results may differ with larger or unquantized models.
 
 ---
